@@ -130,9 +130,7 @@ Or connect your GitHub repo to [vercel.com](https://vercel.com) for automatic de
 
 | Role | Name / Resource |
 |---|---|
-| Developer | *[Add your name here]* |
-| Team Members | *[Add team members here]* |
-| Design Inspiration | *[Add references here]* |
+| Team Members | Utkarsh Sharma, Trassud Afroz, Piyush Agarwal |
 | Icons | [Google Material Symbols](https://fonts.google.com/icons) |
 | CSS Framework | [Tailwind CSS](https://tailwindcss.com/) |
 | Reactivity Library | [Alpine.js](https://alpinejs.dev/) |
