@@ -1,0 +1,85 @@
+/* 
+   scorecard.css — Scorecard page specific styles
+*/
+
+/* ----- Score circle ----- */
+.score-circle {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.score-circle::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    background-color: #1C2541;
+}
+
+/*Conic gradient animation for score ring */
+@keyframes loadScore {
+    from {
+        background: conic-gradient(#ef4444 0% 0%, #1C2541 0% 100%);
+    }
+
+    to {
+        background: var(--final-gradient);
+    }
+}
+
+.animate-score {
+    animation: loadScore 1.5s ease-out forwards;
+}
+
+/*  LIGHT MODE OVERRIDES (scorecard-specific)  */
+html:not(.dark) body {
+    background-color: #f0f4ff !important;
+    color: #1e293b !important;
+}
+
+html:not(.dark) main {
+    background-color: #f0f4ff !important;
+}
+
+html:not(.dark) .bg-surface-dark {
+    background-color: #ffffff !important;
+}
+
+html:not(.dark) .bg-\[\#0A1128\] {
+    background-color: #e8edf8 !important;
+}
+
+html:not(.dark) .bg-\[\#1C2541\] {
+    background-color: #e8edf8 !important;
+}
+
+html:not(.dark) .border-\[\#2d3b5e\] {
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .text-white {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .text-slate-100 {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .text-slate-400 {
+    color: #64748b !important;
+}
+
+html:not(.dark) .text-slate-500 {
+    color: #94a3b8 !important;
+}
+
+html:not(.dark) .border-t.border-\[\#2d3b5e\] {
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .score-circle::before {
+    background-color: #f0f4ff !important;
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+  <script>if (!sessionStorage.getItem('phishshaala_started')) { window.location.replace('index.html'); }
+    (function () { var t = localStorage.getItem('phishshaala_theme'); if (t === 'light') { document.documentElement.classList.remove('dark'); } else { document.documentElement.classList.add('dark'); } })();
+  </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>PhishShaala - Assessment Score</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#FF6B6B",
+            "primary-dark": "#e05555",
+            "background-light": "#f8f5f5",
+            "background-dark": "#0A1128", "surface-dark": "#1C2541", "surface-light": "#ffffff",
+            "navy": "#0A1128",
+            "navy-light": "#1C2541",
+          },
+          fontFamily: {
+            "display": ["Syne", "sans-serif"],
+            "body": ["Space Grotesk", "sans-serif"],
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "2xl": "2rem",
+            "full": "9999px"
+          },
+          backgroundImage: {
+            'cyber-grid': "radial-gradient(circle at center, #ff6b6b1a 1px, transparent 1px)",
+          },
+          boxShadow: {
+            'coral-glow': '0 0 15px rgba(255, 107, 107, 0.5)',
+            'coral-glow-strong': '0 0 25px rgba(255, 107, 107, 0.6)',
+          }
+        },
+      },
+    }
+  </script>
+  <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/scorecard.css" />
+</head>
+
+<body
+  class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body min-h-screen flex flex-col">
+  <header
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-background-dark/80 border-b border-slate-700/50">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center">
+      <a href="index.html" class="flex items-center gap-3 no-underline">
+        <div
+          class="w-10 h-10 bg-gradient-to-tr from-primary to-orange-500 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+          <span class="material-symbols-outlined text-white text-2xl">phishing</span>
+        </div>
+        <h2 class="text-white text-xl font-display font-bold tracking-tight">PhishShaala</h2>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 ml-auto">
+        <a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="index.html">Home</a>
+        <a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="learning.html">Learn</a>
+        <a class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+          href="challenge.html">Challenge</a>
+        <button id="theme-toggle-btn" onclick="toggleTheme()"
+          class="text-slate-300 hover:text-white transition-colors ml-4">
+          <span id="theme-toggle-icon" class="material-symbols-outlined">dark_mode</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+  <main class="flex-1 relative flex flex-col items-center justify-center p-4 md:p-8 overflow-hidden pt-20">
+    <div
+      class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80')] bg-cover opacity-[0.03] pointer-events-none mix-blend-overlay"
+      data-alt="Abstract cyber security background pattern"></div>
+    <div class="absolute inset-0 bg-cyber-grid bg-[length:24px_24px] opacity-20 pointer-events-none"></div>
+    <div class="layout-content-container flex flex-col max-w-[640px] w-full z-10 animate-fade-in-up">
+      <div class="bg-surface-dark border border-[#2d3b5e] rounded-2xl p-10 md:p-14 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-primary blur-[60px] opacity-70"></div>
+        <div class="text-center mb-10">
+          <p class="text-primary font-display font-bold tracking-widest uppercase text-xs mb-2">Assessment Complete</p>
+          <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-2">Quiz Results</h1>
+        </div>
+        <div class="flex flex-col items-center gap-10">
+          <div class="relative">
+            <div
+              class="score-circle animate-score w-48 h-48 md:w-56 md:h-56 shadow-[0_0_30px_-5px_rgba(255,107,107,0.3)]">
+              <div class="relative z-10 flex flex-col items-center justify-center text-center">
+                <span id="score-percentage"
+                  class="text-5xl md:text-6xl font-display font-bold text-white tracking-tighter">75<span
+                    class="text-2xl text-primary">%</span></span>
+                <span id="score-fraction" class="text-slate-400 text-sm mt-1 font-medium font-body">Score: 6/10</span>
+              </div>
+            </div>
+            <div id="badge-badge"
+              class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-primary text-[#0A1128] font-display font-bold px-4 py-1.5 rounded-full text-sm whitespace-nowrap shadow-coral-glow flex items-center gap-1">
+              <span class="material-symbols-outlined text-[18px]">verified</span>
+              <span id="badge-label">Expert Spotter</span>
+            </div>
+          </div>
+          <!-- Performance Breakdown -->
+          <div class="w-full">
+            <h3 class="text-white text-lg font-display font-bold mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary">analytics</span>
+              Performance Breakdown
+            </h3>
+            <div class="grid grid-cols-1 gap-4 font-body">
+              <div
+                class="flex items-center justify-between p-5 rounded-xl bg-[#0A1128] border border-[#2d3b5e] hover:border-primary/40 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-500">
+                    <span class="material-symbols-outlined">mail</span>
+                  </div>
+                  <div>
+                    <p class="text-white font-medium text-sm">Email Phishing</p>
+                    <p class="text-slate-500 text-xs">Identification &amp; Analysis</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="email-score" class="text-white font-bold">4/5</span>
+                  <span id="email-icon" class="material-symbols-outlined text-emerald-500">check_circle</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex items-center justify-between p-5 rounded-xl bg-[#0A1128] border border-[#2d3b5e] hover:border-primary/40 transition-colors group">
+              <div class="flex items-center gap-3">
+                <div class="p-2 rounded-lg bg-amber-500/10 text-amber-500">
+                  <span class="material-symbols-outlined">sms</span>
+                </div>
+                <div>
+                  <p class="text-white font-medium text-sm">Smishing (SMS)</p>
+
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span id="sms-score" class="text-white font-bold">2/5</span>
+                <span id="sms-icon" class="material-symbols-outlined text-amber-500">warning</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 pt-8 mt-2 border-t border-[#2d3b5e]">
+        <a href="challenge.html"
+          class="flex-1 py-3 px-6 rounded-xl border border-primary/30 text-white font-display font-medium hover:bg-[#2d3b5e] hover:border-primary/50 transition-all focus:ring-2 focus:ring-primary/20 flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined">refresh</span>
+          Try Again
+        </a>
+        <a href="index.html"
+          class="flex-1 py-3 px-6 rounded-xl bg-primary text-[#0A1128] font-display font-bold hover:bg-primary-dark transition-all shadow-coral-glow hover:shadow-coral-glow-strong flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined">home</span>
+          Back to Home
+        </a>
+      </div>
+    </div>
+    <p class="text-center text-slate-500 text-sm mt-6 font-body">
+      Keep practicing to maintain your <span class="text-primary font-bold">PhishShaala</span> streak!
+    </p>
+    </div>
+  </main>
+<script src="js/scorecard.js" defer></script>
+</body>
+
+</html>

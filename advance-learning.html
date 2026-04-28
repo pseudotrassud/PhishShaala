@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <script>if (!sessionStorage.getItem('phishshaala_started')) { window.location.replace('index.html'); }
+        (function () { var t = localStorage.getItem('phishshaala_theme'); if (t === 'light') { document.documentElement.classList.remove('dark'); } else { document.documentElement.classList.add('dark'); } })();
+    </script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PhishShaala Learning Center</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF6B6B",
+                        "deep-navy": "#0A1128",
+                        "surface": "#1C2541",
+                        "surface-elevated": "#243050",
+                        "text-main": "#FFFFFF",
+                        "text-muted": "#94A3B8",
+                    },
+                    fontFamily: {
+                        "heading": ["Syne", "sans-serif"],
+                        "body": ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "card": "12px",
+                    },
+                },
+            },
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/advance-learning.css" />
+    <script src="js/advance-learning.js"></script>
+</head>
+
+<body class="bg-deep-navy font-body text-text-main h-screen flex flex-col overflow-hidden">
+    <header
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-background-dark/80 border-b border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center">
+            <a href="index.html" class="flex items-center gap-3 no-underline">
+                <div
+                    class="w-10 h-10 bg-gradient-to-tr from-primary to-orange-500 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-white text-2xl">phishing</span>
+                </div>
+                <h2 class="text-white text-xl font-display font-bold tracking-tight">PhishShaala</h2>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 ml-auto">
+                <a class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+                    href="index.html">Home</a>
+                <a class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+                    href="learning.html">Learn</a>
+                <a class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+                    href="challenge.html">Challenge</a>
+                <button id="theme-toggle-btn" onclick="toggleTheme()"
+                    class="text-slate-300 hover:text-white transition-colors ml-4">
+                    <span id="theme-toggle-icon" class="material-symbols-outlined">dark_mode</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+    <main class="flex flex-1 overflow-hidden pt-20">
+        <aside
+            class="w-64 bg-surface/30 border-r border-surface-elevated flex flex-col shrink-0 hidden md:flex h-full overflow-y-auto custom-scrollbar">
+            <div class="p-6">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-text-muted mb-4 font-heading">Modules</h3>
+                <nav class="flex flex-col gap-1">
+                    <button
+                        class="nav-item active flex items-center gap-3 px-4 py-3 rounded-l-lg transition-all text-sm font-medium w-full text-left"
+                        onclick="showSection('email-phishing')">
+                        <span class="material-symbols-outlined text-lg">mail</span>
+                        Email Phishing
+                    </button>
+                    <button
+                        class="nav-item flex items-center gap-3 px-4 py-3 rounded-l-lg transition-all text-text-muted text-sm font-medium w-full text-left"
+                        onclick="showSection('smishing')">
+                        <span class="material-symbols-outlined text-lg">sms</span>
+                        Smishing
+                    </button>
+                    <button
+                        class="nav-item flex items-center gap-3 px-4 py-3 rounded-l-lg transition-all text-text-muted text-sm font-medium w-full text-left"
+                        onclick="showSection('vishing')">
+                        <span class="material-symbols-outlined text-lg">call</span>
+                        Vishing
+                    </button>
+                    <button
+                        class="nav-item flex items-center gap-3 px-4 py-3 rounded-l-lg transition-all text-text-muted text-sm font-medium w-full text-left"
+                        onclick="showSection('social-media')">
+                        <span class="material-symbols-outlined text-lg">alternate_email</span>
+                        Social Media
+                    </button>
+                    <button
+                        class="nav-item flex items-center gap-3 px-4 py-3 rounded-l-lg transition-all text-text-muted text-sm font-medium w-full text-left"
+                        onclick="showSection('whaling')">
+                        <span class="material-symbols-outlined text-lg">corporate_fare</span>
+                        Whaling
+                    </button>
+                    <button
+                        class="nav-item flex items-center gap-3 px-4 py-3 rounded-l-lg transition-all text-text-muted text-sm font-medium w-full text-left"
+                        onclick="showSection('clone-phishing')">
+                        <span class="material-symbols-outlined text-lg">content_copy</span>
+                        Clone Phishing
+                    </button>
+                </nav>
+            </div>
+            <div class="mt-auto p-6 border-t border-surface-elevated">
+                <div class="bg-surface-elevated/50 p-4 rounded-card border border-surface-elevated">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="material-symbols-outlined text-primary">trophy</span>
+                        <span class="font-bold font-heading text-sm">Progress</span>
+                    </div>
+                    <div class="w-full bg-deep-navy rounded-full h-1.5 mb-2">
+                        <div class="bg-primary h-1.5 rounded-full w-[16.66%]" id="progress-bar-fill"></div>
+                    </div>
+                    <p class="text-xs text-text-muted" id="progress-text">1/6 Modules Reviewed</p>
+                </div>
+            </div>
+        </aside>
+        <section class="flex-1 overflow-y-auto custom-scrollbar bg-deep-navy relative">
+            <div class="max-w-5xl mx-auto px-6 py-8 md:px-12 md:py-12">
+                <div class="content-section active" id="email-phishing">
+                    <div class="mb-10 pb-8 border-b border-surface-elevated">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 w-fit mb-4">
+                            <span class="material-symbols-outlined text-primary text-sm">school</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary font-heading">Module
+                                01</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold font-heading mb-4 text-white">Email Phishing</h1>
+                        <p class="text-lg text-text-muted leading-relaxed font-light">
+                            The most common form of cyber attack where attackers impersonate legitimate organizations
+                            via email to steal credentials or infect devices.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">lightbulb</span>
+                                    Theory
+                                </h2>
+                                <p class="text-text-muted leading-relaxed mb-4">
+                                    Email phishing relies on volume and social engineering. Unlike targeted attacks,
+                                    generic phishing casts a wide net, hoping that a small percentage of recipients will
+                                    fall for the ruse. These emails often create a false sense of urgency or curiosity.
+                                </p>
+                                <p class="text-text-muted leading-relaxed">
+                                    The attacker's goal is typically one of two things:
+                                    <br />1. <strong>Credential Harvesting:</strong> Tricking you into logging into a
+                                    fake page.
+                                    <br />2. <strong>Malware Delivery:</strong> Convincing you to download an infected
+                                    attachment.
+                                </p>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 mt-8 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">settings_suggest</span>
+                                    How it Works
+                                </h2>
+                                <div class="space-y-4">
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            1</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">Spoofing</h4>
+                                            <p class="text-sm text-text-muted">Attacker registers a domain similar to a
+                                                real one (e.g., <span
+                                                    class="font-mono bg-black/20 px-1 rounded">paypa1.com</span> vs
+                                                paypal.com).</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            2</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">The Lure</h4>
+                                            <p class="text-sm text-text-muted">A generic email is sent with a subject
+                                                line like "Urgent: Account Suspended" or "Invoice #1234 Overdue".</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            3</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">The Trap</h4>
+                                            <p class="text-sm text-text-muted">Victim clicks a link and enters their
+                                                password on the fake site. The attacker captures it instantly.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">bug_report</span>
+                                    Example Scenario
+                                </h2>
+                                <div
+                                    class="bg-surface rounded-card border border-surface-elevated overflow-hidden shadow-xl">
+                                    <div
+                                        class="bg-surface-elevated px-4 py-2 border-b border-surface flex items-center justify-between">
+                                        <div class="flex gap-2">
+                                            <div class="size-3 rounded-full bg-red-500"></div>
+                                            <div class="size-3 rounded-full bg-yellow-500"></div>
+                                            <div class="size-3 rounded-full bg-green-500"></div>
+                                        </div>
+                                        <div
+                                            class="text-xs text-text-muted font-mono bg-black/20 px-3 py-1 rounded border border-white/5">
+                                            Subject: Action Required: Unusual Activity
+                                        </div>
+                                    </div>
+                                    <div class="p-6 md:p-8 relative group">
+                                        <div class="absolute top-4 right-4 z-10">
+                                            <span
+                                                class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] uppercase font-bold px-2 py-1 rounded">Phishing
+                                                Attempt</span>
+                                        </div>
+                                        <div class="space-y-4 font-sans text-sm text-gray-300">
+                                            <div class="border-b border-gray-700 pb-3">
+                                                <p><span class="text-gray-500">From:</span> PayPal Support
+                                                    &lt;security@paypa1.com&gt;</p>
+                                                <p><span class="text-gray-500">Date:</span> Today, 10:42 AM</p>
+                                            </div>
+                                            <div class="pt-2">
+                                                <p class="mb-4">Hello Customer,</p>
+                                                <p class="mb-4">We noticed a new login to your account from an
+                                                    unrecognized device in Russia. For your security, we have
+                                                    temporarily limited your account access.</p>
+                                                <button
+                                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 pointer-events-none mb-4 w-full md:w-auto">Verify
+                                                    Identity Now</button>
+                                                <p class="text-xs text-gray-500">If you do not verify within 24 hours,
+                                                    your account will be permanently suspended.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-deep-navy/50 p-4 border-t border-surface-elevated">
+                                        <p class="text-sm text-primary flex items-start gap-2">
+                                            <span class="material-symbols-outlined text-base mt-0.5">warning</span>
+                                            <span class="text-text-muted">Notice the sender domain is
+                                                <strong>paypa1.com</strong> (digit 1 instead of letter l) and the
+                                                generic "Hello Customer" greeting.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-1">
+                            <div class="bg-surface-elevated/30 border border-primary/20 rounded-card p-6 sticky top-6">
+                                <h3 class="text-lg font-bold font-heading mb-4 text-primary flex items-center gap-2">
+                                    <span class="material-symbols-outlined">shield</span>
+                                    Safety Tips
+                                </h3>
+                                <ul class="space-y-4">
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Check the sender's full email address, not just
+                                            the display name.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Hover over links without clicking to preview the
+                                            actual URL.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Beware of generic greetings like "Dear
+                                            Customer".</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Verify urgent requests through a secondary channel
+                                            (e.g., call the bank).</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-surface-elevated pt-8">
+                        <button class="flex items-center gap-2 text-text-muted opacity-50 cursor-not-allowed px-4 py-2"
+                            disabled="">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                            Previous
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-primary hover:bg-[#ff4f4f] text-white px-6 py-2 rounded-lg font-bold transition-all shadow-lg shadow-primary/20"
+                            onclick="markComplete('email-phishing', 'smishing', 2)">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Mark As Complete
+                        </button>
+                    </div>
+                </div>
+                <div class="content-section" id="smishing">
+                    <div class="mb-10 pb-8 border-b border-surface-elevated">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 w-fit mb-4">
+                            <span class="material-symbols-outlined text-primary text-sm">sms</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary font-heading">Module
+                                02</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold font-heading mb-4 text-white">Smishing</h1>
+                        <p class="text-lg text-text-muted leading-relaxed font-light">
+                            SMS Phishing attacks target users via text messages, often pretending to be delivery
+                            services or banks.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">lightbulb</span>
+                                    Theory
+                                </h2>
+                                <p class="text-text-muted leading-relaxed mb-4">
+                                    Smishing (SMS Phishing) is a form of social engineering that uses text messages to
+                                    deceive victims. Because text messages feel more personal and urgent than email,
+                                    users are often quicker to trust them.
+                                </p>
+                                <p class="text-text-muted leading-relaxed">
+                                    Attackers exploit this trust by sending short, alarming messages that demand
+                                    immediate action, such as verifying a transaction or claiming a package.
+                                </p>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 mt-8 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">settings_suggest</span>
+                                    How it Works
+                                </h2>
+                                <div class="space-y-4">
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            1</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">The Setup</h4>
+                                            <p class="text-sm text-text-muted">You receive a text from a "Delivery
+                                                Service" claiming a package couldn't be delivered.</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            2</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">The Link</h4>
+                                            <p class="text-sm text-text-muted">The message includes a shortened link
+                                                (e.g., bit.ly) to "reschedule" the delivery.</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            3</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">The Payoff</h4>
+                                            <p class="text-sm text-text-muted">The link leads to a fake site asking for
+                                                a small "redelivery fee" via credit card.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">bug_report</span>
+                                    Example Scenario
+                                </h2>
+                                <div class="flex justify-start">
+                                    <div
+                                        class="bg-surface rounded-3xl rounded-tl-sm p-4 border border-surface-elevated max-w-sm relative">
+                                        <div class="text-xs text-text-muted mb-1 font-mono">+1 (555) 019-2834</div>
+                                        <div class="text-white text-sm leading-relaxed">
+                                            Your package #TRK8921 is currently held at our distribution warehouse.
+                                            Please pay the outstanding customs fee of $2.00 to release delivery: <span
+                                                class="text-blue-400 underline">bit.ly/fake-link</span>
+                                        </div>
+                                        <div class="mt-2 text-[10px] text-text-muted text-right">12:04 PM</div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 bg-deep-navy/50 p-4 rounded-lg border border-surface-elevated">
+                                    <p class="text-sm text-primary flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-base mt-0.5">warning</span>
+                                        <span class="text-text-muted">The message creates urgency over a trivial amount
+                                            ($2) and uses a shortened URL to hide the destination.</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-1">
+                            <div class="bg-surface-elevated/30 border border-primary/20 rounded-card p-6 sticky top-6">
+                                <h3 class="text-lg font-bold font-heading mb-4 text-primary flex items-center gap-2">
+                                    <span class="material-symbols-outlined">shield</span>
+                                    Safety Tips
+                                </h3>
+                                <ul class="space-y-4">
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Never click links in unsolicited text
+                                            messages.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Verify the sender's short code or number
+                                            online.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Contact the company directly using their official
+                                            website.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Block numbers that send suspicious spam
+                                            texts.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-surface-elevated pt-8">
+                        <button
+                            class="flex items-center gap-2 text-text-muted hover:text-white transition-colors px-4 py-2"
+                            onclick="showSection('email-phishing')">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                            Previous
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-primary hover:bg-[#ff4f4f] text-white px-6 py-2 rounded-lg font-bold transition-all shadow-lg shadow-primary/20"
+                            onclick="markComplete('smishing', 'vishing', 3)">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Mark As Complete
+                        </button>
+                    </div>
+                </div>
+                <div class="content-section" id="vishing">
+                    <div class="mb-10 pb-8 border-b border-surface-elevated">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 w-fit mb-4">
+                            <span class="material-symbols-outlined text-primary text-sm">call</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary font-heading">Module
+                                03</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold font-heading mb-4 text-white">Vishing</h1>
+                        <p class="text-lg text-text-muted leading-relaxed font-light">
+                            Voice Phishing involves attackers making phone calls to deceive victims into revealing
+                            personal information.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">lightbulb</span>
+                                    Theory
+                                </h2>
+                                <p class="text-text-muted leading-relaxed mb-4">
+                                    Vishing (Voice Phishing) relies on voice manipulation and social engineering over
+                                    the phone. Attackers often use Caller ID spoofing to make calls appear to come from
+                                    a trusted source, like a bank or government agency.
+                                </p>
+                                <p class="text-text-muted leading-relaxed">
+                                    Modern vishing attacks may even use AI-generated voices to mimic executives or
+                                    family members in distress.
+                                </p>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 mt-8 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">settings_suggest</span>
+                                    How it Works
+                                </h2>
+                                <div class="space-y-4">
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            1</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">The Robocall</h4>
+                                            <p class="text-sm text-text-muted">Automated systems dial thousands of
+                                                numbers, playing a pre-recorded threat (e.g., "Your social security
+                                                number is suspended").</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            2</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">The Escalation</h4>
+                                            <p class="text-sm text-text-muted">The victim presses '1' to speak to an
+                                                "agent," who is actually a fraudster in a call center.</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            3</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">AI Manipulation</h4>
+                                            <p class="text-sm text-text-muted">In advanced attacks, AI voice skins are
+                                                used to impersonate a specific person's voice to authorize transfers.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">bug_report</span>
+                                    Example Scenario
+                                </h2>
+                                <div class="bg-surface rounded-card border border-surface-elevated p-6">
+                                    <div class="flex items-center justify-center mb-6">
+                                        <div
+                                            class="size-24 rounded-full bg-deep-navy border-4 border-red-500/20 flex items-center justify-center animate-pulse">
+                                            <span
+                                                class="material-symbols-outlined text-4xl text-red-400">phone_in_talk</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mb-6">
+                                        <h3 class="text-xl font-bold text-white">Incoming Call: "Tax Support"</h3>
+                                        <p class="text-sm text-text-muted">+1 (800) 555-TAX-HELP</p>
+                                    </div>
+                                    <div
+                                        class="bg-surface-elevated/50 p-4 rounded-lg border border-surface-elevated font-mono text-sm text-gray-300">
+                                        <p class="mb-2"><span class="text-red-400 font-bold">Agent:</span> "This is
+                                            Officer Smith from Tax Support. We have a warrant for your arrest due to
+                                            unpaid back taxes."</p>
+                                        <p class="mb-2"><span class="text-red-400 font-bold">Agent:</span> "To avoid
+                                            immediate jail time, you must pay the penalty of $500 right now."</p>
+                                        <p class="mb-0"><span class="text-red-400 font-bold">Agent:</span> "We only
+                                            accept payment via Target or Apple Gift Cards. Do not hang up or the police
+                                            will be dispatched."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-1">
+                            <div class="bg-surface-elevated/30 border border-primary/20 rounded-card p-6 sticky top-6">
+                                <h3 class="text-lg font-bold font-heading mb-4 text-primary flex items-center gap-2">
+                                    <span class="material-symbols-outlined">shield</span>
+                                    Safety Tips
+                                </h3>
+                                <ul class="space-y-4">
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Verify the caller by hanging up and calling the
+                                            official number.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Never give out sensitive info (PINs, passwords)
+                                            over the phone.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Be skeptical of unknown numbers, even if the area
+                                            code looks local.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Let unknown calls go to voicemail to screen them
+                                            first.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-surface-elevated pt-8">
+                        <button
+                            class="flex items-center gap-2 text-text-muted hover:text-white transition-colors px-4 py-2"
+                            onclick="showSection('smishing')">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                            Previous
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-primary hover:bg-[#ff4f4f] text-white px-6 py-2 rounded-lg font-bold transition-all shadow-lg shadow-primary/20"
+                            onclick="markComplete('vishing', 'social-media', 4)">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Mark As Complete
+                        </button>
+                    </div>
+                </div>
+                <div class="content-section" id="social-media">
+                    <div class="mb-10 pb-8 border-b border-surface-elevated">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 w-fit mb-4">
+                            <span class="material-symbols-outlined text-primary text-sm">alternate_email</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary font-heading">Module
+                                04</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold font-heading mb-4 text-white">Social Media Phishing
+                        </h1>
+                        <p class="text-lg text-text-muted leading-relaxed font-light">
+                            Attacks executed on social platforms like Facebook, LinkedIn, or Twitter, leveraging
+                            personal connections.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">lightbulb</span>
+                                    Theory
+                                </h2>
+                                <p class="text-text-muted leading-relaxed mb-4">
+                                    Social media phishing often involves profile cloning or hijacking. Attackers create
+                                    a duplicate profile of someone you know, using their photos and details, to trick
+                                    you into lowering your guard.
+                                </p>
+                                <p class="text-text-muted leading-relaxed">
+                                    Once connected, they may send malicious links via Direct Message (DM) or ask for
+                                    money, claiming an emergency.
+                                </p>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 mt-8 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">settings_suggest</span>
+                                    How it Works
+                                </h2>
+                                <div class="space-y-4">
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            1</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">Profile Cloning</h4>
+                                            <p class="text-sm text-text-muted">The attacker copies a target's profile
+                                                picture and bio, creating a nearly identical account.</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            2</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">The Friend Request</h4>
+                                            <p class="text-sm text-text-muted">They send friend requests to the target's
+                                                friends, who often accept thinking it's the real person.</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            3</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">Urgent DMs</h4>
+                                            <p class="text-sm text-text-muted">The fake account sends a message: "I'm
+                                                stuck in London, lost my wallet, can you wire me cash?"</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">bug_report</span>
+                                    Example Scenario
+                                </h2>
+                                <div class="bg-surface rounded-card border border-surface-elevated p-4">
+                                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-surface-elevated">
+                                        <div class="size-10 rounded-full bg-gray-600 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-white text-lg">person</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-sm">Sarah Jenkins <span
+                                                    class="text-text-muted font-normal">(New Account)</span></h4>
+                                            <p class="text-xs text-text-muted">Active 2m ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="flex justify-start">
+                                            <div
+                                                class="bg-surface-elevated p-3 rounded-2xl rounded-tl-sm text-sm text-white max-w-[85%]">
+                                                Hey!! I got locked out of my main account 😭 Instagram sent a reset code
+                                                to your phone by accident because you're in my trusted contacts.
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-start">
+                                            <div
+                                                class="bg-surface-elevated p-3 rounded-2xl rounded-tl-sm text-sm text-white max-w-[85%]">
+                                                Can you please screenshot it and send it to me so I can log back in??
+                                                Pls hurry!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-4 border-t border-surface-elevated">
+                                        <p class="text-xs text-primary flex gap-2">
+                                            <span class="material-symbols-outlined text-sm">warning</span>
+                                            <span>This is a takeover scam. If you send the code, the attacker will use
+                                                it to take over <strong>YOUR</strong> account.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-1">
+                            <div class="bg-surface-elevated/30 border border-primary/20 rounded-card p-6 sticky top-6">
+                                <h3 class="text-lg font-bold font-heading mb-4 text-primary flex items-center gap-2">
+                                    <span class="material-symbols-outlined">shield</span>
+                                    Safety Tips
+                                </h3>
+                                <ul class="space-y-4">
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Check profile age and follower count before
+                                            accepting requests.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Contact your friend through another channel
+                                            (text/call) to verify.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Report duplicate profiles to the platform
+                                            immediately.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Limit public visibility of your friends list to
+                                            prevent targeting.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-surface-elevated pt-8">
+                        <button
+                            class="flex items-center gap-2 text-text-muted hover:text-white transition-colors px-4 py-2"
+                            onclick="showSection('vishing')">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                            Previous
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-primary hover:bg-[#ff4f4f] text-white px-6 py-2 rounded-lg font-bold transition-all shadow-lg shadow-primary/20"
+                            onclick="markComplete('social-media', 'whaling', 5)">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Mark As Complete
+                        </button>
+                    </div>
+                </div>
+                <div class="content-section" id="whaling">
+                    <div class="mb-10 pb-8 border-b border-surface-elevated">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 w-fit mb-4">
+                            <span class="material-symbols-outlined text-primary text-sm">corporate_fare</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary font-heading">Module
+                                05</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold font-heading mb-4 text-white">Whaling</h1>
+                        <p class="text-lg text-text-muted leading-relaxed font-light">
+                            Targeted phishing attacks aimed at senior executives or high-profile individuals within an
+                            organization.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">lightbulb</span>
+                                    Theory
+                                </h2>
+                                <p class="text-text-muted leading-relaxed mb-4">
+                                    Whaling is a specific form of spear phishing that targets the "big fish" – CEOs,
+                                    CFOs, or other high-value targets. The goal is often to steal sensitive company data
+                                    or initiate large fraudulent wire transfers.
+                                </p>
+                                <p class="text-text-muted leading-relaxed">
+                                    These attacks are highly researched and sophisticated, often using business language
+                                    and insider knowledge to appear authentic.
+                                </p>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 mt-8 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">settings_suggest</span>
+                                    How it Works
+                                </h2>
+                                <div class="space-y-4">
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            1</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">Reconnaissance</h4>
+                                            <p class="text-sm text-text-muted">Attackers study the executive's schedule,
+                                                speaking style, and business partners online.</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            2</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">Impersonation</h4>
+                                            <p class="text-sm text-text-muted">An email is sent appearing to be from the
+                                                CEO to the finance department, requesting an "urgent vendor payment".
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            3</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">Pressure Tactics</h4>
+                                            <p class="text-sm text-text-muted">The message emphasizes confidentiality
+                                                and urgency (e.g., "for a secret acquisition") to bypass standard
+                                                procedures.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">bug_report</span>
+                                    Example Scenario
+                                </h2>
+                                <div
+                                    class="bg-surface rounded-card border border-surface-elevated overflow-hidden shadow-xl">
+                                    <div
+                                        class="bg-surface-elevated px-4 py-2 border-b border-surface flex items-center gap-2">
+                                        <div
+                                            class="text-xs text-text-muted font-mono bg-black/20 px-3 py-1 rounded border border-white/5 w-full">
+                                            Subject: Urgent Wire Transfer - Project Alpha
+                                        </div>
+                                    </div>
+                                    <div class="p-6 md:p-8 relative">
+                                        <div class="space-y-4 font-sans text-sm text-gray-300">
+                                            <div class="border-b border-gray-700 pb-3">
+                                                <p><span class="text-gray-500">From:</span> John Doe (CEO)
+                                                    &lt;ceo@your-company.co&gt;</p>
+                                                <p><span class="text-gray-500">To:</span> Finance Controller</p>
+                                            </div>
+                                            <div class="pt-2">
+                                                <p class="mb-4">Hi,</p>
+                                                <p class="mb-4">I'm currently in a meeting with a new vendor for the
+                                                    Alpha acquisition. We need to process an initial deposit of $45,000
+                                                    immediately to secure the deal.</p>
+                                                <p class="mb-4">Please wire the funds to the attached account details
+                                                    within the next 30 minutes. This is highly confidential, so do not
+                                                    discuss it with anyone else until I return.</p>
+                                                <p class="text-xs text-gray-500">Sent from my iPhone</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-deep-navy/50 p-4 border-t border-surface-elevated">
+                                        <p class="text-sm text-primary flex items-start gap-2">
+                                            <span class="material-symbols-outlined text-base mt-0.5">warning</span>
+                                            <span class="text-text-muted">The sender domain is <strong>.co</strong>
+                                                instead of <strong>.com</strong>. The email demands urgency and secrecy
+                                                to prevent verification.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-1">
+                            <div class="bg-surface-elevated/30 border border-primary/20 rounded-card p-6 sticky top-6">
+                                <h3 class="text-lg font-bold font-heading mb-4 text-primary flex items-center gap-2">
+                                    <span class="material-symbols-outlined">shield</span>
+                                    Safety Tips
+                                </h3>
+                                <ul class="space-y-4">
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Implement multi-channel verification for all large
+                                            fund transfers.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Train staff to recognize executive impersonation
+                                            attempts.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Use digital signatures or encrypted email for
+                                            sensitive communications.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Verify any request that asks to bypass standard
+                                            security protocols.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-surface-elevated pt-8">
+                        <button
+                            class="flex items-center gap-2 text-text-muted hover:text-white transition-colors px-4 py-2"
+                            onclick="showSection('social-media')">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                            Previous
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-primary hover:bg-[#ff4f4f] text-white px-6 py-2 rounded-lg font-bold transition-all shadow-lg shadow-primary/20"
+                            onclick="markComplete('whaling', 'clone-phishing', 6)">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Mark As Complete
+                        </button>
+                    </div>
+                </div>
+                <div class="content-section" id="clone-phishing">
+                    <div class="mb-10 pb-8 border-b border-surface-elevated">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 w-fit mb-4">
+                            <span class="material-symbols-outlined text-primary text-sm">content_copy</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary font-heading">Module
+                                06</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold font-heading mb-4 text-white">Clone Phishing</h1>
+                        <p class="text-lg text-text-muted leading-relaxed font-light">
+                            A technique where a legitimate, previously delivered email is cloned and the content is
+                            modified to include malicious links.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">lightbulb</span>
+                                    Theory
+                                </h2>
+                                <p class="text-text-muted leading-relaxed mb-4">
+                                    Clone phishing takes a legitimate email that the victim has already received and
+                                    creates an identical copy. The attacker then resends this "cloned" email from a
+                                    spoofed address that looks like the original sender.
+                                </p>
+                                <p class="text-text-muted leading-relaxed">
+                                    The key difference is that the attachments or links in the email are replaced with
+                                    malicious versions, while the rest of the content remains exactly the same to
+                                    maintain trust.
+                                </p>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold font-heading mb-4 mt-8 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">settings_suggest</span>
+                                    How it Works
+                                </h2>
+                                <div class="space-y-4">
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            1</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">Interception</h4>
+                                            <p class="text-sm text-text-muted">The attacker intercepts a legitimate
+                                                email or obtains one from a previous breach.</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            2</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">Modification</h4>
+                                            <p class="text-sm text-text-muted">They replace the original attachment or
+                                                link with malware or a phishing site link.</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card p-4 border border-surface-elevated flex gap-4">
+                                        <div
+                                            class="size-8 rounded-full bg-deep-navy flex items-center justify-center shrink-0 border border-surface-elevated text-primary font-heading font-bold">
+                                            3</div>
+                                        <div>
+                                            <h4 class="font-bold text-white mb-1">Resending</h4>
+                                            <p class="text-sm text-text-muted">The email is sent with a subject like
+                                                "Updated Invoice" or "Resending important document".</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h2 class="text-2xl font-bold font-heading mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">bug_report</span>
+                                    Example Scenario
+                                </h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div
+                                        class="bg-surface rounded-card border border-green-500/30 p-4 relative opacity-60 hover:opacity-100 transition-opacity">
+                                        <div
+                                            class="absolute -top-3 left-4 bg-green-500/20 text-green-400 border border-green-500/30 text-[10px] uppercase font-bold px-2 py-1 rounded">
+                                            Original Email</div>
+                                        <div class="pt-2 text-xs text-gray-400">
+                                            <p class="mb-2 font-bold">From: Microsoft Security</p>
+                                            <p class="mb-3">We detected a sign-in attempt.</p>
+                                            <div
+                                                class="bg-surface-elevated p-2 rounded text-center border border-white/10 mb-2">
+                                                <span class="text-blue-400">Review Activity</span>
+                                            </div>
+                                            <p class="text-[10px] text-green-400">Link: microsoft.com/security</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-surface rounded-card border border-red-500/30 p-4 relative">
+                                        <div
+                                            class="absolute -top-3 left-4 bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] uppercase font-bold px-2 py-1 rounded">
+                                            Cloned Email</div>
+                                        <div class="pt-2 text-xs text-gray-400">
+                                            <p class="mb-2 font-bold">From: Microsoft Security <span
+                                                    class="text-[10px] font-normal opacity-70">&lt;alert@ms-update.net&gt;</span>
+                                            </p>
+                                            <p class="mb-3">We detected a sign-in attempt.</p>
+                                            <div
+                                                class="bg-surface-elevated p-2 rounded text-center border border-white/10 mb-2">
+                                                <span class="text-blue-400">Review Activity</span>
+                                            </div>
+                                            <p class="text-[10px] text-red-400">Link: ms-security-verify.net</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 bg-deep-navy/50 p-4 rounded-lg border border-surface-elevated">
+                                    <p class="text-sm text-primary flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-base mt-0.5">warning</span>
+                                        <span class="text-text-muted">The content is visually identical. The only tells
+                                            are the slight change in sender address and the malicious link
+                                            destination.</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-1">
+                            <div class="bg-surface-elevated/30 border border-primary/20 rounded-card p-6 sticky top-6">
+                                <h3 class="text-lg font-bold font-heading mb-4 text-primary flex items-center gap-2">
+                                    <span class="material-symbols-outlined">shield</span>
+                                    Safety Tips
+                                </h3>
+                                <ul class="space-y-4">
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Inspect link destinations carefully, even in
+                                            emails that look familiar.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Check the sender's address for subtle
+                                            misspellings.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Be wary of "updated version" emails sent shortly
+                                            after the original.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-sm">
+                                        <span
+                                            class="material-symbols-outlined text-green-400 text-lg mt-0.5 shrink-0">check_circle</span>
+                                        <span class="text-text-muted">Scan all attachments with antivirus software
+                                            before opening.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-surface-elevated pt-8">
+                        <button
+                            class="flex items-center gap-2 text-text-muted hover:text-white transition-colors px-4 py-2"
+                            onclick="showSection('whaling')">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                            Previous
+                        </button>
+                        <button
+                            class="flex items-center gap-2 bg-primary hover:bg-[#ff4f4f] text-white px-6 py-2 rounded-lg font-bold transition-all shadow-lg shadow-primary/20"
+                            onclick="window.location.href='index.html'">
+                            <span class="material-symbols-outlined">home</span>
+                            Return Home
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

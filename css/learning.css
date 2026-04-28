@@ -1,0 +1,400 @@
+/* 
+   learning.css — Learning page specific styles
+*/
+
+/* ----- Hide scrollbar ----- */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* ----- 3D perspective container ----- */
+.perspective-container {
+    perspective: 1000px;
+}
+
+/* ----- Tilt card (learning variant) ----- */
+.tilt-card {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+}
+
+.tilt-card:hover {
+    transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.tilt-card:hover button {
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
+}
+
+/* ----- Body defaults ----- */
+body {
+    background-color: #0A1128;
+    color: white;
+}
+
+/* ----- Details / accordion ----- */
+details {
+    transition: all 0.3s ease-out;
+    max-height: 80px;
+    overflow: hidden;
+}
+
+details[open] {
+    max-height: 2000px;
+    transition: all 0.5s ease-in;
+}
+
+details>summary {
+    list-style: none;
+}
+
+details>summary::-webkit-details-marker {
+    display: none;
+}
+
+details[open] summary~* {
+    animation: fadeInSlideDown 0.5s ease-out forwards;
+}
+
+@keyframes fadeInSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+details[open] summary .expand-icon {
+    transform: rotate(180deg);
+}
+
+/* ----- Nav underline link ----- */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #FF6B6B;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ----- Custom scrollbar (horizontal, for cards strip) ----- */
+.custom-scrollbar::-webkit-scrollbar {
+    height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #1C2541;
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #FF6B6B;
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #ff4f4f;
+}
+
+/* ----- Fade-up reveal ----- */
+.fade-up-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-up-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Extra delay utilities (learning-specific) */
+.delay-400 {
+    transition-delay: 400ms;
+}
+
+.delay-500 {
+    transition-delay: 500ms;
+}
+
+.delay-600 {
+    transition-delay: 600ms;
+}
+
+/* ----- Zoom image card ----- */
+.zoom-card-img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center center;
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.zoom-card:hover .zoom-card-img {
+    transform: scale(1.08);
+}
+
+/* ===== LIGHT MODE OVERRIDES (learning-specific) ===== */
+html:not(.dark) body {
+    background-color: #f0f4ff !important;
+    color: #1e293b !important;
+}
+
+html:not(.dark) .bg-deep-navy,
+html:not(.dark) .bg-surface,
+html:not(.dark) .bg-surface-elevated {
+    background-color: #e8edf8 !important;
+}
+
+html:not(.dark) section {
+    background-color: #f0f4ff !important;
+}
+
+html:not(.dark) section.bg-surface\/30 {
+    background-color: #e8edf8 !important;
+}
+
+html:not(.dark) .text-white {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .text-text-main {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .text-text-muted {
+    color: #64748b !important;
+}
+
+html:not(.dark) .text-slate-300,
+html:not(.dark) .text-slate-400 {
+    color: #475569 !important;
+}
+
+html:not(.dark) .border-surface-elevated {
+    border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) .tilt-card {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .tilt-card h3,
+html:not(.dark) .tilt-card p {
+    color: #1e293b !important;
+}
+
+html:not(.dark) details {
+    background-color: #ffffff !important;
+    border-color: rgba(255, 107, 107, 0.3) !important;
+}
+
+html:not(.dark) details summary {
+    color: #1e293b !important;
+}
+
+html:not(.dark) details p,
+html:not(.dark) details li,
+html:not(.dark) details span.text-text-muted {
+    color: #475569 !important;
+}
+
+html:not(.dark) .custom-scrollbar::-webkit-scrollbar-track {
+    background: #e2e8f0;
+}
+
+html:not(.dark) .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+}
+
+html:not(.dark) summary:hover {
+    background-color: #1C2541 !important;
+    color: white !important;
+}
+
+html:not(.dark) summary:hover span,
+html:not(.dark) summary:hover div,
+html:not(.dark) summary:hover .material-symbols-outlined {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-primary:hover {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-primary:hover * {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-surface-elevated:hover {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-surface-elevated:hover * {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-surface:hover {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-surface:hover * {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-deep-navy:hover {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-deep-navy:hover * {
+    color: white !important;
+}
+
+html:not(.dark) .tilt-card:hover a {
+    color: white !important;
+    background-color: #ff6b6b !important;
+}
+
+/* CTA section */
+html:not(.dark) section.bg-surface {
+    background-color: #1C2541 !important;
+}
+
+html:not(.dark) section.bg-surface h2,
+html:not(.dark) section.bg-surface p,
+html:not(.dark) section.bg-surface span,
+html:not(.dark) section.bg-surface button {
+    color: white !important;
+}
+
+html:not(.dark) .bg-surface-elevated {
+    background-color: #dde3f0 !important;
+}
+
+html:not(.dark) .bg-surface-elevated * {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .bg-surface-elevated h3 {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .bg-surface-elevated .text-red-400 {
+    color: #dc2626 !important;
+}
+
+html:not(.dark) .bg-surface-elevated .text-green-400 {
+    color: #16a34a !important;
+}
+
+html:not(.dark) .bg-primary\/10 {
+    background-color: rgba(255, 107, 107, 0.15) !important;
+}
+
+html:not(.dark) .text-primary {
+    color: #e05555 !important;
+}
+
+html:not(.dark) .rounded-2xl.bg-gradient-to-r {
+    background: linear-gradient(to right, #1C2541, #243050) !important;
+    border-color: rgba(255, 107, 107, 0.25) !important;
+}
+
+html:not(.dark) .rounded-2xl.bg-gradient-to-r h2 {
+    color: #ffffff !important;
+}
+
+html:not(.dark) .rounded-2xl.bg-gradient-to-r p {
+    color: #94a3b8 !important;
+}
+
+/* Deep dive dropdown panels */
+html:not(.dark) details>div {
+    background-color: #f8faff !important;
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) details>div h4 {
+    color: #1e293b !important;
+}
+
+html:not(.dark) details>div p,
+html:not(.dark) details>div li,
+html:not(.dark) details>div span:not(.material-symbols-outlined) {
+    color: #334155 !important;
+}
+
+html:not(.dark) details>div .text-text-muted {
+    color: #475569 !important;
+}
+
+html:not(.dark) details .bg-red-500\/10 {
+    background-color: rgba(239, 68, 68, 0.08) !important;
+}
+
+html:not(.dark) details .bg-orange-500\/10 {
+    background-color: rgba(249, 115, 22, 0.08) !important;
+}
+
+html:not(.dark) details .bg-yellow-500\/10 {
+    background-color: rgba(234, 179, 8, 0.08) !important;
+}
+
+html:not(.dark) details .bg-surface-elevated\/30 {
+    background-color: #f1f5ff !important;
+}
+
+html:not(.dark) details .bg-surface-elevated {
+    background-color: #dde4f0 !important;
+}
+
+html:not(.dark) details .bg-surface-elevated * {
+    color: #1e293b !important;
+}
+
+html:not(.dark) details .bg-deep-navy,
+html:not(.dark) details [class*="bg-deep-navy"],
+html:not(.dark) details .bg-\[#0A1128\] {
+    background-color: #dde4f0 !important;
+}
+
+html:not(.dark) details .bg-deep-navy *,
+html:not(.dark) details [class*="bg-deep-navy"] *,
+html:not(.dark) details .bg-\[#0A1128\] * {
+    color: #1e293b !important;
+}
+
+html:not(.dark) details .bg-gradient-to-br {
+    background: linear-gradient(to bottom right, #dde4f0, #c8d3e8) !important;
+}
+
+html:not(.dark) details .text-text-main {
+    color: #1e293b !important;
+}
+
+html:not(.dark) details .text-text-muted {
+    color: #64748b !important;
+}

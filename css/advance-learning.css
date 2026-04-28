@@ -1,0 +1,300 @@
+/* 
+   advance-learning.css — Advanced Learning page specific styles
+ */
+
+/* ----- Hide scrollbar ----- */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* ----- Body defaults ----- */
+body {
+    background-color: #0A1128;
+    color: white;
+}
+
+/* ----- Custom scrollbar (sidebar) ----- */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #1C2541;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #243050;
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #FF6B6B;
+}
+
+/* ----- Sidebar nav items ----- */
+.nav-item.active {
+    background-color: rgba(255, 107, 107, 0.1);
+    border-right: 3px solid #FF6B6B;
+    color: #FF6B6B;
+}
+
+.nav-item:hover:not(.active) {
+    background-color: rgba(28, 37, 65, 0.5);
+    color: #FF6B6B;
+}
+
+/* ----- Content sections (tab panels) ----- */
+.content-section {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* LIGHT MODE OVERRIDES (advance-learning-specific) */
+html:not(.dark) body {
+    background-color: #f0f4ff !important;
+    color: #1e293b !important;
+}
+
+html:not(.dark) aside {
+    background-color: #e8edf8 !important;
+    border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) .bg-deep-navy,
+html:not(.dark) .bg-surface,
+html:not(.dark) .bg-surface-elevated,
+html:not(.dark) .bg-surface-elevated\/50,
+html:not(.dark) .bg-surface-elevated\/30 {
+    background-color: #eef2ff !important;
+}
+
+html:not(.dark) [class*="bg-deep-navy"] {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) [class*="bg-deep-navy"] p,
+html:not(.dark) [class*="bg-deep-navy"] span {
+    color: #334155 !important;
+}
+
+html:not(.dark) [class*="bg-deep-navy"] .text-primary,
+html:not(.dark) [class*="bg-deep-navy"] .material-symbols-outlined {
+    color: #e05555 !important;
+}
+
+html:not(.dark) .text-white {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .text-gray-300 {
+    color: #334155 !important;
+}
+
+html:not(.dark) .text-gray-500 {
+    color: #64748b !important;
+}
+
+html:not(.dark) .text-text-main {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .text-text-muted {
+    color: #475569 !important;
+}
+
+html:not(.dark) .text-slate-300,
+html:not(.dark) .text-slate-400 {
+    color: #475569 !important;
+}
+
+html:not(.dark) .border-surface-elevated {
+    border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) section.overflow-y-auto {
+    background-color: #ffffff !important;
+}
+
+html:not(.dark) .nav-item {
+    color: #475569 !important;
+}
+
+html:not(.dark) .nav-item.active {
+    background-color: rgba(255, 107, 107, 0.12) !important;
+    color: #e05555 !important;
+}
+
+html:not(.dark) .nav-item:hover:not(.active) {
+    background-color: #1C2541 !important;
+    color: white !important;
+}
+
+html:not(.dark) .nav-item:hover:not(.active) *,
+html:not(.dark) .nav-item:hover:not(.active) .material-symbols-outlined {
+    color: white !important;
+}
+
+html:not(.dark) .nav-item .material-symbols-outlined {
+    color: #475569 !important;
+}
+
+html:not(.dark) .nav-item.active .material-symbols-outlined {
+    color: #e05555 !important;
+}
+
+html:not(.dark) .custom-scrollbar::-webkit-scrollbar-track {
+    background: #e2e8f0;
+}
+
+html:not(.dark) .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+}
+
+html:not(.dark) hr {
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4 {
+    color: #1e293b !important;
+}
+
+html:not(.dark) p {
+    color: #475569 !important;
+}
+
+html:not(.dark) li {
+    color: #475569 !important;
+}
+
+html:not(.dark) .border-\[\#2d3b5e\] {
+    border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) .hover\:bg-primary:hover {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-primary:hover * {
+    color: white !important;
+}
+
+html:not(.dark) .hover\:bg-surface-elevated:hover,
+html:not(.dark) .hover\:bg-surface-elevated:hover * {
+    color: white !important;
+}
+
+/* Progress box */
+html:not(.dark) aside .bg-surface-elevated\/50 {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) aside .bg-surface-elevated\/50 .font-bold {
+    color: #1e293b !important;
+}
+
+html:not(.dark) aside .bg-surface-elevated\/50 p,
+html:not(.dark) aside .bg-surface-elevated\/50 #progress-text {
+    color: #475569 !important;
+}
+
+html:not(.dark) aside .bg-surface-elevated\/50 .text-primary {
+    color: #e05555 !important;
+}
+
+html:not(.dark) aside .bg-deep-navy {
+    background-color: #e2e8f0 !important;
+}
+
+/* Email mockup */
+html:not(.dark) .bg-surface-elevated.px-4.py-2 {
+    background-color: #dde4f0 !important;
+}
+
+html:not(.dark) .font-mono.bg-black\/20 {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+    color: #334155 !important;
+}
+
+html:not(.dark) .border-surface-elevated.rounded-lg,
+html:not(.dark) .border-surface-elevated.rounded-card {
+    border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) .border-primary\/20.rounded-card {
+    background-color: #fff8f8 !important;
+    border-color: rgba(224, 85, 85, 0.25) !important;
+}
+
+html:not(.dark) .text-primary {
+    color: #e05555 !important;
+}
+
+html:not(.dark) span.bg-primary\/10,
+html:not(.dark) .bg-primary\/10 {
+    background-color: rgba(255, 107, 107, 0.15) !important;
+}
+
+html:not(.dark) .bg-primary\/10 span {
+    color: #e05555 !important;
+}
+
+html:not(.dark) .size-8.rounded-full {
+    background-color: #dde4f0 !important;
+    border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) .size-24.rounded-full {
+    background-color: #dde4f0 !important;
+}
+
+html:not(.dark) .bg-surface-elevated.p-3 {
+    background-color: #dde4f0 !important;
+}
+
+html:not(.dark) .bg-surface-elevated.p-3 * {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .bg-surface.rounded-3xl {
+    background-color: #dde4f0 !important;
+}
+
+html:not(.dark) .bg-surface.rounded-3xl .text-white {
+    color: #1e293b !important;
+}
+
+html:not(.dark) header a div.bg-gradient-to-tr .material-symbols-outlined {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .bg-primary .material-symbols-outlined,
+html:not(.dark) .bg-primary span.material-symbols-outlined {
+    color: #1e293b !important;
+}

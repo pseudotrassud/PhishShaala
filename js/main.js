@@ -1,0 +1,3 @@
+/**
+ * PhishShaala — Shared / Global JavaScript
+ */

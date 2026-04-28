@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <script>if (!sessionStorage.getItem('phishshaala_started')) { window.location.replace('index.html'); }
+        (function () { var t = localStorage.getItem('phishshaala_theme'); if (t === 'light') { document.documentElement.classList.remove('dark'); } else { document.documentElement.classList.add('dark'); } })();
+    </script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PhishShaala Challenge Hub</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF6B6B", // Coral
+                        "background-light": "#f8f5f5", // Unused but required by spec
+                        "background-dark": "#0A1128", // Deep Navy
+                        "surface-dark": "#1C2541", // Surface
+                        "surface-light": "#2C395B", // Lighter Surface for hover/active
+                        "surface-elevated": "#243050", // Neutral grey highlight for active state
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "heading": ["Syne", "sans-serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                    boxShadow: {
+                        'neon': '0 0 10px rgba(255, 107, 107, 0.5), 0 0 20px rgba(255, 107, 107, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/challenge.css" />
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display h-screen flex flex-col w-full max-w-none overflow-hidden selection:bg-primary selection:text-white"
+    x-data="{
+          loading: true,
+          error: null,
+          isValidating: false,
+          currentScenarioId: 1,
+          hasSelected: false,
+          userSelection: null,
+          score: 0,
+          completedCount: 0,
+          answeredScenarios: {},
+          scenarios: [],
+          async init() {
+            try {
+              const res = await fetch('/api/questions');
+              if (!res.ok) throw new Error('Server error');
+              this.scenarios = await res.json();
+            } catch (e) {
+              this.error = 'Could not load quiz scenarios. Please refresh the page.';
+            } finally {
+              this.loading = false;
+            }
+            this.$watch('currentScenarioId', () => {
+              if (this.$refs.contentPanel) this.$refs.contentPanel.scrollTop = 0;
+            });
+          },
+          get currentScenario() {
+            return this.scenarios.find(s => s.id === this.currentScenarioId) || {};
+          },
+          get progressPercentage() {
+            if (!this.scenarios.length) return 0;
+            return (Object.keys(this.answeredScenarios).length / this.scenarios.length) * 100;
+          },
+          async selectOption(isSafe) {
+            if (this.answeredScenarios[this.currentScenarioId] || this.isValidating) return;
+            this.hasSelected = true;
+            this.userSelection = isSafe ? 'safe' : 'phishing';
+            this.isValidating = true;
+            try {
+              const res = await fetch('/api/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ scenarioId: this.currentScenarioId, userAnswer: this.userSelection })
+              });
+              const { correct } = await res.json();
+              this.answeredScenarios[this.currentScenarioId] = { selection: this.userSelection, correct };
+              if (correct) this.score += 100;
+              const s = this.scenarios.find(s => s.id === this.currentScenarioId);
+              if (s) s.status = 'Completed';
+              this.completedCount = Object.keys(this.answeredScenarios).length;
+              this.answeredScenarios = { ...this.answeredScenarios };
+            } catch {
+              this.hasSelected = false;
+              this.userSelection = null;
+            } finally {
+              this.isValidating = false;
+            }
+          },
+          nextQuestion() {
+            if (this.currentScenarioId < this.scenarios.length) {
+              const nextId = this.currentScenarioId + 1;
+              const next = this.scenarios.find(s => s.id === nextId);
+              if (next && next.status === 'Pending') next.status = 'Active';
+              this.currentScenarioId = nextId;
+              if (this.answeredScenarios[this.currentScenarioId]) {
+                const saved = this.answeredScenarios[this.currentScenarioId];
+                this.hasSelected = true;
+                this.userSelection = saved.selection;
+              } else {
+                this.hasSelected = false;
+                this.userSelection = null;
+              }
+            }
+          },
+          async viewScorecard() {
+            const answers = {};
+            Object.entries(this.answeredScenarios).forEach(([id, d]) => {
+              answers[parseInt(id)] = d.selection;
+            });
+            try {
+              const res = await fetch('/api/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ answers })
+              });
+              const data = await res.json();
+              localStorage.setItem('phishshaala_score', JSON.stringify(data));
+            } catch {
+              // Fallback: compute client-side from what we have
+              const emailCorrect = Object.entries(this.answeredScenarios)
+                .filter(([id]) => this.scenarios.find(s => s.id === parseInt(id))?.type === 'email')
+                .filter(([, d]) => d.correct).length;
+              const smsCorrect = Object.entries(this.answeredScenarios)
+                .filter(([id]) => this.scenarios.find(s => s.id === parseInt(id))?.type === 'sms')
+                .filter(([, d]) => d.correct).length;
+              localStorage.setItem('phishshaala_score', JSON.stringify({ totalScore: this.score, emailCorrect, smsCorrect }));
+            }
+            window.location.href = 'scorecard.html';
+          },
+          selectScenario(id) {
+            const scenario = this.scenarios.find(s => s.id === id);
+            if (!scenario || scenario.status === 'Pending') return;
+            this.currentScenarioId = id;
+            if (this.answeredScenarios[id]) {
+              const saved = this.answeredScenarios[id];
+              this.hasSelected = true;
+              this.userSelection = saved.selection;
+            } else {
+              this.hasSelected = false;
+              this.userSelection = null;
+            }
+            if (this.$refs.contentPanel) this.$refs.contentPanel.scrollTop = 0;
+          },
+          isScenarioLocked(id) {
+            const s = this.scenarios.find(s => s.id === id);
+            return !s || s.status === 'Pending';
+          },
+          getSidebarClass(scenario) {
+            if (this.answeredScenarios[scenario.id]) {
+              return this.answeredScenarios[scenario.id].correct
+                ? 'bg-green-500/5 border-l-4 border-l-green-500 border-y border-r border-white/5'
+                : 'bg-red-500/5 border-l-4 border-l-red-500 border-y border-r border-white/5';
+            }
+            if (this.currentScenarioId === scenario.id)
+              return 'bg-surface-elevated border-l-4 border-l-primary border-y border-r border-white/10 hover:bg-surface-light';
+            if (scenario.status === 'Pending')
+              return 'opacity-40 cursor-not-allowed bg-transparent border border-transparent';
+            return 'bg-transparent border border-transparent hover:bg-surface-light cursor-pointer';
+          }
+        }">
+    <!-- Loading overlay while questions are fetched from API -->
+    <div x-show="loading" class="fixed inset-0 z-[999] bg-background-dark flex flex-col items-center justify-center gap-4">
+        <div class="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
+        <p class="text-slate-300 text-sm font-display">Loading scenarios…</p>
+    </div>
+    <!-- Error state -->
+    <div x-show="error && !loading" class="fixed inset-0 z-[999] bg-background-dark flex flex-col items-center justify-center gap-4 p-8 text-center">
+        <span class="material-symbols-outlined text-primary text-5xl">error</span>
+        <p class="text-white text-lg font-bold font-heading" x-text="error"></p>
+        <button onclick="location.reload()" class="mt-2 bg-primary text-white px-6 py-2.5 rounded-lg font-bold hover:bg-red-500 transition-colors">Retry</button>
+    </div>
+    <header
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-background-dark/80 border-b border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center">
+            <a href="index.html" class="flex items-center gap-3 no-underline">
+                <div
+                    class="w-10 h-10 bg-gradient-to-tr from-primary to-orange-500 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-white text-2xl">phishing</span>
+                </div>
+                <h2 class="text-white text-xl font-display font-bold tracking-tight">PhishShaala</h2>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 ml-auto">
+                <a class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+                    href="index.html">Home</a>
+                <a class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+                    href="learning.html">Learn</a>
+                <a class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+                    href="challenge.html">Challenge</a>
+                <button id="theme-toggle-btn" onclick="toggleTheme()"
+                    class="text-slate-300 hover:text-white transition-colors ml-4">
+                    <span id="theme-toggle-icon" class="material-symbols-outlined">dark_mode</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+    <div class="flex flex-1 w-full h-full pt-20 overflow-hidden">
+        <aside class="w-80 h-full bg-surface-dark border-r border-white/5 flex flex-col shrink-0 overflow-hidden z-20">
+            <div class="p-6 border-b border-white/5 shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="flex flex-col">
+                        <p class="text-primary/90 text-lg font-heading font-medium tracking-wide">Catch the Phish before
+                            it bite</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-6 custom-scrollbar pb-8">
+                <div class="w-full flex justify-center shrink-0">
+                    <div class="bg-background-dark/50 rounded-xl p-4 border border-white/5 w-full text-center">
+                        <p class="text-xs text-slate-400 mb-1 uppercase tracking-wider">Current Score</p>
+                        <p class="text-3xl font-bold text-white font-heading" x-text="score">0</p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2 shrink-0">
+                    <div class="flex items-center gap-2 mb-2 px-2">
+                        <span class="material-symbols-outlined text-primary text-xl">mail</span>
+                        <h3 class="font-heading font-semibold text-white tracking-wide">Email Scenarios</h3>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <template :key="scenario.id" x-for="scenario in scenarios.filter(s =&gt; s.type === 'email')">
+                            <button :class="getSidebarClass(scenario)" :disabled="scenario.status === 'Pending'"
+                                @click="selectScenario(scenario.id)"
+                                class="group flex items-center justify-between p-3 rounded-r-lg text-left transition-all">
+                                <div class="flex flex-col gap-0.5 ml-1">
+                                    <span
+                                        :class="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'text-green-400' : 'text-red-400') : (currentScenarioId === scenario.id ? 'text-white' : 'text-slate-300')"
+                                        class="text-sm font-bold" x-text="scenario.title"></span>
+                                    <span
+                                        :class="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'text-green-400/70' : 'text-red-400/70') : (currentScenarioId === scenario.id ? 'text-slate-300' : 'text-slate-500')"
+                                        class="text-[10px] uppercase tracking-wider"
+                                        x-text="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'Solved' : 'Failed') : scenario.status"></span>
+                                </div>
+                                <span
+                                    :class="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'text-green-500' : 'text-red-500') : (currentScenarioId === scenario.id ? 'text-primary' : (scenario.status === 'Pending' ? 'text-slate-600' : 'text-slate-500'))"
+                                    class="material-symbols-outlined text-lg"
+                                    x-text="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'check_circle' : 'cancel') : (currentScenarioId === scenario.id ? 'play_circle' : (scenario.status === 'Pending' ? 'lock' : 'check_circle_outline'))"></span>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2 shrink-0">
+                    <div class="flex items-center gap-2 mb-2 px-2 mt-2">
+                        <span class="material-symbols-outlined text-slate-400 text-xl">sms</span>
+                        <h3 class="font-heading font-semibold text-slate-300 tracking-wide">SMS Scenarios</h3>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <template :key="scenario.id" x-for="scenario in scenarios.filter(s =&gt; s.type === 'sms')">
+                            <button :class="getSidebarClass(scenario)" :disabled="scenario.status === 'Pending'"
+                                @click="selectScenario(scenario.id)"
+                                class="group flex items-center justify-between p-3 rounded-r-lg text-left transition-all">
+                                <div class="flex flex-col gap-0.5 ml-1">
+                                    <span
+                                        :class="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'text-green-400' : 'text-red-400') : (currentScenarioId === scenario.id ? 'text-white' : 'text-slate-300')"
+                                        class="text-sm font-bold" x-text="scenario.title"></span>
+                                    <span
+                                        :class="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'text-green-400/70' : 'text-red-400/70') : (currentScenarioId === scenario.id ? 'text-slate-300' : 'text-slate-500')"
+                                        class="text-[10px] uppercase tracking-wider"
+                                        x-text="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'Solved' : 'Failed') : scenario.status"></span>
+                                </div>
+                                <span
+                                    :class="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'text-green-500' : 'text-red-500') : (currentScenarioId === scenario.id ? 'text-primary' : (scenario.status === 'Pending' ? 'text-slate-600' : 'text-slate-500'))"
+                                    class="material-symbols-outlined text-lg"
+                                    x-text="answeredScenarios[scenario.id] ? (answeredScenarios[scenario.id].correct ? 'check_circle' : 'cancel') : (currentScenarioId === scenario.id ? 'play_circle' : (scenario.status === 'Pending' ? 'lock' : 'check_circle_outline'))"></span>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <main class="flex-grow flex flex-col relative h-full w-full overflow-hidden">
+            <div
+                class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none -z-10 translate-x-1/2 -translate-y-1/2">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#4cc9f0]/5 rounded-full blur-3xl pointer-events-none -z-10 -translate-x-1/3 translate-y-1/3">
+            </div>
+            <header
+                class="h-20 flex items-center justify-between px-8 border-b border-white/5 bg-background-dark/80 backdrop-blur-md z-30 shrink-0 w-full">
+                <div class="flex items-center gap-4 h-full">
+                    <h2 class="text-white font-heading text-xl font-bold">
+                        <span x-text="'Scenario ' + currentScenarioId + ': ' + currentScenario.title"></span>
+                    </h2>
+                </div>
+                <div class="flex flex-col items-end gap-1 w-64">
+                    <div class="flex justify-between w-full text-xs font-medium text-slate-400">
+                        <span x-text="'Scenario ' + currentScenarioId + ' of 10'"></span>
+                        <span class="text-primary" x-text="Math.round(progressPercentage) + '% Complete'"></span>
+                    </div>
+                    <div class="w-full h-1.5 bg-surface-dark rounded-full overflow-hidden">
+                        <div :style="'width: ' + progressPercentage + '%'"
+                            class="h-full bg-primary rounded-full transition-all duration-500 ease-out"></div>
+                    </div>
+                </div>
+            </header>
+            <div class="flex-1 overflow-y-auto relative w-full flex flex-col custom-scrollbar" x-ref="contentPanel">
+                <div class="flex justify-center w-full pt-8 px-8 pb-32">
+                    <div class="w-full max-w-4xl flex flex-col gap-6">
+                        <div
+                            class="bg-primary/5 border border-primary/20 rounded-xl p-4 flex items-start gap-3 shrink-0">
+                            <span class="material-symbols-outlined text-primary mt-0.5">info</span>
+                            <div>
+                                <h4 class="text-white font-bold text-sm mb-1">Mission Brief</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed"
+                                    x-show="currentScenario.type === 'email'">
+                                    Analyze the email below carefully. The recipient has received this unexpected
+                                    communication. Inspect the sender address, the urgency of the tone, and the links
+                                    provided to determine if this is legitimate or a phishing attempt.
+                                </p>
+                                <p class="text-slate-300 text-sm leading-relaxed"
+                                    x-show="currentScenario.type === 'sms'">
+                                    Review the SMS message received on a mobile device. The message may contain links or
+                                    OTPs. Assess the sender ID and the context of the message to identify potential
+                                    threats.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="animate-slide-in glass-panel rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+                            x-show="currentScenario.type === 'email'">
+                            <div
+                                class="h-10 bg-surface-dark border-b border-white/5 flex items-center px-4 gap-2 shrink-0">
+                                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                                <div class="ml-4 flex-1 text-center text-xs text-slate-500 font-mono">
+                                    Mail - Inbox - <span x-text="currentScenario.email"></span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div
+                                    class="p-6 bg-surface-light/30 border-b border-white/5 shrink-0 backdrop-blur-sm z-10">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <h1 class="text-2xl font-bold text-white tracking-tight"
+                                            x-html="currentScenario.subject"></h1>
+                                        <span class="text-xs text-slate-400 bg-surface-dark px-2 py-1 rounded"
+                                            x-text="currentScenario.date"></span>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-blue-600 font-bold text-xl overflow-hidden shadow-sm">
+                                            <span class="material-symbols-outlined text-3xl">account_circle</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-bold text-white"
+                                                    x-text="currentScenario.sender"></span>
+                                                <span class="text-xs text-slate-400">&lt;<span
+                                                        x-text="currentScenario.email"></span>&gt;</span>
+                                            </div>
+                                            <span class="text-sm text-slate-400">To: <span
+                                                    class="text-slate-300">me@myinbox.com</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-8 scenario-email-body relative">
+                                    <p class="mb-4" x-html="currentScenario.content"></p>
+                                    <div class="my-8 flex justify-center">
+                                        <button
+                                            class="bg-[#0070ba] text-white font-bold py-3 px-8 rounded hover:bg-[#005ea6] transition-colors shadow-lg pointer-events-none"
+                                            x-text="currentScenario.linkText">
+                                        </button>
+                                    </div>
+                                    <p class="mb-2 text-sm text-gray-600">If you believe this is an error, please
+                                        contact customer support immediately.</p>
+                                    <p class="mt-8 text-xs text-gray-500 border-t pt-4">
+                                        This email is intended for the recipient. If you received this in error, please
+                                        delete it.<br />
+                                        Secure Gateway ID: IND-SEC-9921
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="animate-slide-in flex justify-center items-center h-full min-h-[500px] py-4"
+                            x-show="currentScenario.type === 'sms'">
+                            <div class="relative w-[320px] bg-black rounded-[3rem] border-4 border-slate-700 shadow-2xl overflow-hidden flex flex-col"
+                                style="height: 600px;">
+                                <div class="absolute inset-0 bg-slate-900 flex flex-col font-sans z-0">
+                                    <div
+                                        class="h-8 bg-slate-900 flex items-center justify-between px-6 text-[10px] text-white font-medium z-10 shrink-0">
+                                        <span>9:41</span>
+                                        <div class="flex gap-1.5">
+                                            <span
+                                                class="material-symbols-outlined text-[14px]">signal_cellular_alt</span>
+                                            <span class="material-symbols-outlined text-[14px]">wifi</span>
+                                            <span class="material-symbols-outlined text-[14px]">battery_full</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="h-14 bg-slate-800/80 backdrop-blur flex items-center px-4 border-b border-white/5 z-10 relative shrink-0">
+                                        <span class="material-symbols-outlined text-blue-400 mr-4">arrow_back_ios</span>
+                                        <div class="flex flex-col items-center flex-1 pr-6">
+                                            <div
+                                                class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-white text-xs mb-0.5 overflow-hidden">
+                                                <span class="material-symbols-outlined text-lg">person</span>
+                                            </div>
+                                            <span class="text-[10px] text-slate-300"
+                                                x-text="currentScenario.sender"></span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex-1 p-4 flex flex-col gap-4 overflow-y-auto custom-scrollbar bg-gradient-to-b from-slate-900 to-slate-800">
+                                        <div class="text-center text-[10px] text-slate-500 my-2"
+                                            x-text="currentScenario.date"></div>
+                                        <div class="self-start max-w-[85%]">
+                                            <div
+                                                class="bg-surface-light rounded-2xl rounded-tl-none p-3 shadow-lg border border-white/5">
+                                                <p class="text-white text-sm leading-snug" x-text="currentScenario.msg">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="h-16 bg-slate-800 border-t border-white/5 px-4 flex items-center gap-3 shrink-0 pb-4">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-slate-400">
+                                            <span class="material-symbols-outlined text-lg">add</span>
+                                        </div>
+                                        <div
+                                            class="flex-1 h-9 rounded-full bg-slate-900 border border-slate-700 flex items-center px-3">
+                                            <span class="text-slate-500 text-xs">Text Message</span>
+                                        </div>
+                                        <span class="material-symbols-outlined text-blue-500">arrow_upward</span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-20 pointer-events-none">
+                                </div>
+                                <div
+                                    class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-20 pointer-events-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer
+                class="h-20 bg-surface-dark/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-8 z-40 shrink-0 shadow-[0_-5px_15px_rgba(0,0,0,0.2)] w-full">
+                <div class="flex items-center gap-4">
+                    <button
+                        :class="(hasSelected &amp;&amp; userSelection === 'safe') ? 'bg-green-600 text-white border-green-500 shadow-[0_0_15px_rgba(34,197,94,0.4)]' : (!hasSelected ? 'border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-500 cursor-pointer' : 'border-slate-700 text-slate-600 opacity-50 cursor-not-allowed')"
+                        :disabled="hasSelected" @click="selectOption(true)"
+                        class="flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg border-2 transition-all font-bold tracking-wide w-40 whitespace-nowrap">
+                        <span class="material-symbols-outlined">verified_user</span>
+                        Mark Safe
+                    </button>
+                    <button
+                        :class="(hasSelected &amp;&amp; userSelection === 'phishing') ? 'bg-primary text-white shadow-[0_0_15px_rgba(239,68,68,0.8)]' : (!hasSelected ? 'bg-primary text-white shadow-neon hover:bg-red-500 hover:shadow-[0_0_15px_rgba(239,68,68,0.6)] cursor-pointer' : 'bg-slate-800 text-slate-500 border border-slate-700 opacity-50 cursor-not-allowed')"
+                        :disabled="hasSelected" @click="selectOption(false)"
+                        class="flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg transition-all font-bold tracking-wide w-48 whitespace-nowrap">
+                        <span class="material-symbols-outlined">flag</span>
+                        Flag Suspicious
+                    </button>
+                </div>
+                <div class="flex items-center justify-end gap-6 ml-auto">
+                    <div class="flex items-center gap-2 text-slate-400 text-sm hidden md:flex" x-show="!hasSelected">
+                        <span class="w-2 h-2 rounded-full bg-slate-600"></span>
+                        Select an option to proceed
+                    </div>
+                    <div class="flex items-center gap-2 text-slate-400 text-sm hidden md:flex" x-show="isValidating">
+                        <span class="material-symbols-outlined text-lg" style="animation:spin 1s linear infinite">progress_activity</span>
+                        <span>Checking...</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-white text-sm hidden md:flex" x-show="hasSelected && answeredScenarios[currentScenarioId] && !isValidating">
+                        <span :class="answeredScenarios[currentScenarioId]?.correct ? 'text-green-400' : 'text-primary'"
+                            class="material-symbols-outlined text-lg">
+                            <span
+                                x-text="answeredScenarios[currentScenarioId]?.correct ? 'check_circle' : 'error'"></span>
+                        </span>
+                        <span
+                            x-text="answeredScenarios[currentScenarioId]?.correct ? 'Correct! +100 XP' : 'Incorrect choice.'"></span>
+                    </div>
+                    <div x-show="currentScenarioId !== 10">
+                        <button
+                            :class="hasSelected ? 'bg-primary text-white shadow-neon hover:bg-red-500 cursor-pointer' : 'bg-surface-light/20 border border-white/5 text-slate-500 cursor-not-allowed opacity-70'"
+                            :disabled="!hasSelected" @click="nextQuestion()"
+                            class="flex items-center gap-2 px-6 py-2.5 rounded-lg font-medium transition-all">
+                            Next Question
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                    <div x-show="currentScenarioId === 10">
+                        <button
+                            :class="hasSelected ? 'bg-primary text-white shadow-neon hover:bg-red-500 cursor-pointer' : 'bg-surface-light/20 border border-white/5 text-slate-500 cursor-not-allowed opacity-70'"
+                            :disabled="!hasSelected" @click="viewScorecard()"
+                            class="flex items-center gap-2 px-6 py-2.5 rounded-lg font-medium transition-all">
+                            View Scorecard
+                            <span class="material-symbols-outlined">assessment</span>
+                        </button>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+
+</html>

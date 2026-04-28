@@ -1,0 +1,53 @@
+/* 
+   PhishShaala — Shared / Global Styles
+   Linked on every page.
+ */
+
+/* SHARED TRANSITION DELAY UTILITIES */
+.delay-100 {
+    transition-delay: 100ms;
+}
+
+.delay-200 {
+    transition-delay: 200ms;
+}
+
+.delay-300 {
+    transition-delay: 300ms;
+}
+
+/*  SHARED LIGHT MODE OVERRIDES */
+
+/* Header shell */
+html:not(.dark) header {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(203, 213, 225, 0.8) !important;
+}
+
+/* Logo text + all anchor tags inside header */
+html:not(.dark) header h2,
+html:not(.dark) header a {
+    color: #1e293b !important;
+}
+
+/* Nav links */
+html:not(.dark) header nav a {
+    color: #475569 !important;
+}
+
+html:not(.dark) header nav a:hover {
+    color: #ff6b6b !important;
+}
+
+/* Nav buttons (theme toggle) */
+html:not(.dark) header nav button {
+    color: #475569 !important;
+}
+
+/* Theme toggle button — strip any box decoration */
+html:not(.dark) #theme-toggle-btn {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
