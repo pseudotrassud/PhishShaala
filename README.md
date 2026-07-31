@@ -2,7 +2,7 @@
 
 > **PhishShaala** is an interactive cybersecurity awareness platform that teaches users how to identify phishing attacks — including email scams, SMS smishing, voice vishing, and social-media deception — through guided lessons and a live scenario-based challenge.
 
-**Live Demo:** [Add your deployed link here]
+**Live Demo:** phishshaala.vercel.app
 
 > **Architecture:** The quiz answer key is stored exclusively in Vercel serverless backend functions (`/api`) and never sent to the client. The frontend fetches only the scenario content and submits answers to the API for validation.
 
